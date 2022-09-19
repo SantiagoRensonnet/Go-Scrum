@@ -1,0 +1,43 @@
+.Login {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Login > form label {
+  display: block;
+}
+.Login > form button {
+  width: 100%;
+  padding: 0.5rem 0;
+  background-color: white;
+  border: #999 solid 1px;
+}
+.Login > form button:hover {
+  background-color: hsl(0, 0%, 99%);
+  cursor: pointer;
+}
+
+.form-input-group {
+  margin-bottom: 1rem;
+}
+.form-input-group > input {
+  width: 100%;
+  padding: 0.5rem 0;
+  border: #999 solid 1px;
+}
+.form-error-msg {
+  color: red;
+}
+
+@media screen and (min-width: 600px) {
+  .Login {
+    width: 30em;
+    border: black solid 1px;
+  }
+  .Login {
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 2rem 10rem 0px;
+  }
+}

@@ -1,0 +1,69 @@
+.auth {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_card {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login_card > form label {
+  display: block;
+}
+.login_card > form button {
+  transition: all 0.25s ease-in-out;
+  width: 100%;
+  padding: 0.5rem 0;
+  background-color: var(--global-primary-color);
+  border-radius: var(--global-radius);
+  border: var(--global-border);
+  border-color: transparent;
+  color: white;
+  font-size: 0.9rem;
+}
+.login_card > form button:hover {
+  background-color: white;
+  color: var(--global-primary-color);
+
+  border-color: var(--global-primary-color);
+  cursor: pointer;
+}
+.login_card > form button:disabled:hover {
+  background-color: var(--global-primary-color);
+  color: white;
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+.form_input_group {
+  margin-bottom: 1rem;
+}
+.form_input_group > input {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-radius: var(--global-radius);
+  border: var(--global-border);
+}
+.form_error_msg {
+  color: var(--global-primary-color);
+}
+
+@media screen and (min-width: 600px) {
+  .auth {
+    background-color: var(--global-bg-color-soft);
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 2rem 10rem 0px;
+  }
+  .login_card {
+    width: 30em;
+    border-radius: var(--global-radius);
+    border: 0.5px solid hsl(0, 0%, 85%);
+    background-color: white;
+  }
+}

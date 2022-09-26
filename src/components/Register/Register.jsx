@@ -1,4 +1,4 @@
-import "./Register.css";
+import "./Register.styles.css";
 import { useFormik } from "formik";
 
 export const Register = () => {

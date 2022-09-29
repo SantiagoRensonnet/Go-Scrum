@@ -1,4 +1,4 @@
-.auth {
+.auth_container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -6,18 +6,21 @@
   align-items: center;
 }
 
-.login_card {
+.auth_card {
   width: 100%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
-.login_card > form label {
+.auth_card > form a {
+  text-decoration: none;
+  color: black;
+}
+.auth_card > form label {
   display: block;
 }
-.login_card > form button {
+.auth_card > form button {
   transition: all 0.25s ease-in-out;
   width: 100%;
   padding: 0.5rem 0;
@@ -28,14 +31,14 @@
   color: white;
   font-size: 0.9rem;
 }
-.login_card > form button:hover {
+.auth_card > form button:hover {
   background-color: white;
   color: var(--global-primary-color);
 
   border-color: var(--global-primary-color);
   cursor: pointer;
 }
-.login_card > form button:disabled:hover {
+.auth_card > form button:disabled:hover {
   background-color: var(--global-primary-color);
   color: white;
   border-color: transparent;
@@ -47,20 +50,30 @@
 }
 .form_input_group > input {
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.5rem;
+  border-radius: var(--global-radius);
+  border: var(--global-border);
+}
+.form_input_group > select {
+  width: 100%;
+  padding: 0.5rem 0.5rem;
   border-radius: var(--global-radius);
   border: var(--global-border);
 }
 .form_error_msg {
   color: var(--global-primary-color);
 }
-
+.auth_container > .auth_card > form input.form_error_field,
+.auth_container > .auth_card > form select.form_error_field,
+.auth_container > .auth_card > form textarea.form_error_field {
+  border-color: var(--global-primary-color);
+}
 @media screen and (min-width: 600px) {
-  .auth {
+  .auth_container {
     background-color: var(--global-bg-color-soft);
     box-shadow: rgba(17, 12, 46, 0.15) 0px 2rem 10rem 0px;
   }
-  .login_card {
+  .auth_card {
     width: 30em;
     border-radius: var(--global-radius);
     border: 0.5px solid hsl(0, 0%, 85%);

@@ -13,7 +13,7 @@ export const Card = ({ data }) => {
       <h3>{data.title}</h3>
       <h6>{data.date}</h6>
       <h5>{data.creator}</h5>
-      <button type="button">{data.type}</button>
+      <button type="button">{data.status}</button>
       <button type="button">{data.priority}</button>
       <p>{limitString(data.description)}</p>
     </div>

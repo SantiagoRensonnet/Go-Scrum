@@ -1,10 +1,10 @@
 //Libraries
 import { useState } from "react";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 //Styles
-import "./Login.styles.css";
+import "../Auth.styles.css";
 
 export const Login = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -30,7 +30,7 @@ export const Login = () => {
       if (!values.password) {
         errors.password = "Required";
       }
-      console.log(errors);
+
       return errors;
     },
     onSubmit: (values) => {
@@ -44,14 +44,14 @@ export const Login = () => {
     isVisible && (
       <AnimatePresence>
         <motion.div
-          className="auth"
+          className="auth_container"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="login_card">
+          <div className="auth_card">
             <h1>Iniciar Sesión</h1>
-            <form onSubmit={handleSubmit} noValidate>
+            <form onSubmit={handleSubmit}>
               <div className="form_input_group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -83,6 +83,9 @@ export const Login = () => {
               >
                 Enviar
               </button>
+              <Link to={"/register"} onClick={() => setIsVisible(false)}>
+                Registrarme
+              </Link>
             </form>
           </div>
         </motion.div>

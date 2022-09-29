@@ -5,6 +5,7 @@ import { useResize } from "../../../hooks/useResize";
 //Components
 import { Header } from "../../Header/Header";
 import { Card } from "../../Card/Card";
+import { TaskForm } from "../../TaskForm/TaskForm";
 //Styles
 import "./Tasks.styles.css";
 //data
@@ -19,7 +20,9 @@ export const Tasks = () => {
   return (
     <>
       <Header />
+
       <main id="tasks">
+        <TaskForm />
         <section className="wrapper_list">
           <h2 className="list_header">Mis Tareas</h2>
 

@@ -1,7 +1,9 @@
 #tasks {
   padding: 20px 15px 5px;
 }
+
 #tasks .wrapper_list {
+  padding: 20px 15px 5px;
   background-color: hsl(0, 0%, 98%);
   border-radius: var(--global-border-radius);
   height: calc(100vh -100px);
@@ -68,11 +70,26 @@ h6 {
 }
 
 @media screen and (min-width: 900px) {
-  .list {
+  #tasks {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+  #tasks > .wrapper_list {
+    grid-column: 2/4;
+  }
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
   .card {
     width: 95%;
+  }
+}
+@media screen and (min-width: 1300px) {
+  #tasks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
 }

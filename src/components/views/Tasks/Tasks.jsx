@@ -28,7 +28,7 @@ export const Tasks = () => {
         key={task._id}
         title={task.title}
         date={task.createdAt}
-        creator={task.user.userNAme}
+        creator={task.user.userName}
         status={task.status}
         importance={task.importance}
         description={task.description}
@@ -43,7 +43,7 @@ export const Tasks = () => {
           key={task._id}
           title={task.title}
           date={task.createdAt}
-          creator={task.user.userNAme}
+          creator={task.user.userName}
           status={task.status}
           importance={task.importance}
           description={task.description}
@@ -58,7 +58,7 @@ export const Tasks = () => {
           key={task._id}
           title={task.title}
           date={task.createdAt}
-          creator={task.user.userNAme}
+          creator={task.user.userName}
           status={task.status}
           importance={task.importance}
           description={task.description}
@@ -73,7 +73,7 @@ export const Tasks = () => {
           key={task._id}
           title={task.title}
           date={task.createdAt}
-          creator={task.user.userNAme}
+          creator={task.user.userName}
           status={task.status}
           importance={task.importance}
           description={task.description}
@@ -101,7 +101,6 @@ export const Tasks = () => {
   return (
     <>
       <Header />
-
       <main id="tasks">
         <TaskForm />
         <section className="wrapper_list">

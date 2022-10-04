@@ -10,6 +10,7 @@ export const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userName");
     setIsVisible(false);
     navigate("/", { replace: true });
   };
@@ -23,8 +24,13 @@ export const Header = () => {
           exit={{ opacity: 0 }}
         >
           <span>Go Scrum</span>
-          <div className="header--close-btn" onClick={handleLogout}>
-            x
+          <div className="wrapper_right_header">
+            <div className="username_header">
+              {localStorage.getItem("userName")}
+            </div>
+            <div className="close_btn_header" onClick={handleLogout}>
+              x
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>

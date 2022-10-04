@@ -1,7 +1,5 @@
 .Header {
   height: 4rem;
-  /* position: fixed;
-  top: 0; */
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -15,6 +13,12 @@
   border-right-width: 0px;
   cursor: default;
 }
-.header--close-btn {
+.wrapper_right_header {
+  display: flex;
+}
+.username_header {
+  margin-right: 0.8em;
+}
+.close_btn_header {
   cursor: pointer;
 }

@@ -28,7 +28,6 @@ export const Login = () => {
       validationSchema: loginFormSchema,
       onSubmit: (values) => {
         const { userName, password } = values;
-        // localStorage.setItem("token", "yes");
         fetch(`${API_ENDPOINT}auth/login`, {
           method: "POST", // or 'PUT'
           headers: {
@@ -40,6 +39,7 @@ export const Login = () => {
           .then((data) => {
             if (data.status_code === 200) {
               localStorage.setItem("token", data?.result?.token);
+              localStorage.setItem("userName", data?.result?.user.userName);
               setIsVisible(false);
               navigate("/", { replace: true });
             } else {

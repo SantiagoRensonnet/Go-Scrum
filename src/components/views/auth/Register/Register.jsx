@@ -1,34 +1,85 @@
 //Libraries
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { motion, AnimatePresence } from "framer-motion";
+import { Switch, FormControlLabel } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 //Schema
 import { registerFormSchema } from "./registerFormSchema";
 //Styles
 import "../Auth.styles.css";
+//Environment variable
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 export const Register = () => {
+  //States
   const [isVisible, setIsVisible] = useState(true);
   const [selectOptions, setSelectOptions] = useState();
-  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
-    useFormik({
-      initialValues: {
-        userName: "",
-        password: "",
-        email: "",
-        teamID: "",
-        role: "", // ==> ["Team Member","Team Leader"]
-        continent: "", // ==> ["America","Europa","Otro"]
-        region: "", // ==> ["Otro","Latam","Brasil","America del Norte"]
-      },
-      validationSchema: registerFormSchema,
-      onSubmit: (values) => {
-        alert();
-      },
-    });
+
+  const navigate = useNavigate();
+  //Event Handlers
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    values,
+    touched,
+    errors,
+  } = useFormik({
+    initialValues: {
+      userName: "",
+      password: "",
+      email: "",
+      teamExists: false, //Team already exists
+      teamID: "",
+      role: "", // ==> ["Team Member","Team Leader"]
+      continent: "", // ==> ["America","Europa","Otro"]
+      region: "", // ==> ["Otro","Latam","Brasil","America del Norte"]
+    },
+    validationSchema: registerFormSchema,
+
+    onSubmit: (values) => {
+      const teamID = values.teamExists ? values.teamID : uuidv4();
+      const { userName, password, email, role, continent, region } = values;
+      fetch(`${REACT_APP_API_ENDPOINT}auth/register`, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: {
+            userName,
+            password,
+            email,
+            teamID,
+            role,
+            continent,
+            region,
+          },
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          navigate("/registered/" + data?.result.user?.teamID, {
+            replace: true,
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+  });
+  const handleChangeContinent = (event) => {
+    const selectedContinent = event.target.value;
+    setFieldValue("continent", selectedContinent);
+    if (selectedContinent && selectedContinent !== "America")
+      setFieldValue("region", "Otro");
+  };
+  //Side Effects
   useEffect(() => {
-    fetch("https://goscrum-api.alkemy.org/auth/data")
+    fetch(`${REACT_APP_API_ENDPOINT}auth/data`)
       .then((res) => res.json())
       .then((data) => setSelectOptions(data.result));
   }, []);
@@ -96,11 +147,39 @@ export const Register = () => {
                   <span className="form_error_msg">{errors.email}</span>
                 )}
               </div>
-              <input
-                type="hidden"
-                name="teamID"
-                value="3245-90234234-23489234"
+
+              <FormControlLabel
+                control={
+                  <Switch
+                    name="teamExists"
+                    color="warning"
+                    onChange={() => {
+                      setFieldValue("teamExists", !values.teamExists);
+                    }}
+                    checked={values.teamExists}
+                    value={values.teamExists}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label="Perteneces a un equipo ya creado"
               />
+              {values.teamExists && (
+                <div className="form_input_group">
+                  <label htmlFor="teamID">
+                    Por favor introduce el identificador de equipo
+                  </label>
+                  <input
+                    type="text"
+                    name="teamID"
+                    value={values.teamID}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                </div>
+              )}
+              {errors.teamID && touched.teamID && (
+                <span className="form_error_msg">{errors.teamID}</span>
+              )}
               <div className="form_input_group">
                 <label htmlFor="role">Rol</label>
                 <select
@@ -130,7 +209,7 @@ export const Register = () => {
                 <label htmlFor="continent">Continente</label>
                 <select
                   name="continent"
-                  onChange={handleChange}
+                  onChange={(event) => handleChangeContinent(event)}
                   value={values.continent}
                   onBlur={handleBlur}
                   className={

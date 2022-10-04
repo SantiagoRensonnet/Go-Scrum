@@ -7,6 +7,11 @@
     "Dujaut",
     "formik",
     "Fulanito",
-    "Latam"
+    "Latam",
+    "swal",
+    "Swal",
+    "sweetalert",
+    "toastify",
+    "uuidv"
   ]
 }

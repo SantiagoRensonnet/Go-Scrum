@@ -9,7 +9,7 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("logged");
+    localStorage.removeItem("token");
     setIsVisible(false);
     navigate("/", { replace: true });
   };

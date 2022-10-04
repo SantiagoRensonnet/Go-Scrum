@@ -1,24 +1,56 @@
 //Libraries
+import React from "react";
 import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 //Schema
 import { taskFormSchema } from "./taskFormSchema";
 //Styles
 import "./TaskForm.styles.css";
 
+//Environment variable
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env;
+
 export const TaskForm = () => {
-  const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
-    useFormik({
-      initialValues: {
-        title: "",
-        status: "",
-        priority: "",
-        description: "",
-      },
-      validationSchema: taskFormSchema,
-      onSubmit: (values) => {
-        alert();
-      },
-    });
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      title: "",
+      status: "",
+      importance: "",
+      description: "",
+    },
+    validationSchema: taskFormSchema,
+    onSubmit: (values) => {
+      fetch(`${API_ENDPOINT}task`, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          task: values,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          resetForm();
+
+          toast("tu tarea se creó");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+  });
 
   return (
     <section className="task-form">
@@ -52,9 +84,9 @@ export const TaskForm = () => {
               }
             >
               <option value="">Seleccionar un estado</option>
-              <option value="new">Nueva</option>
-              <option value="inProcess">En Proceso</option>
-              <option value="finished">Terminada</option>
+              <option value="NEW">Nueva</option>
+              <option value="IN PROGRESS">En Proceso</option>
+              <option value="FINISHED">Terminada</option>
             </select>
             {errors.status && touched.status && (
               <span className="form_error_msg">{errors.status}</span>
@@ -62,21 +94,23 @@ export const TaskForm = () => {
           </div>
           <div className="row">
             <select
-              name="priority"
+              name="importance"
               onChange={handleChange}
-              value={values.priority}
+              value={values.importance}
               onBlur={handleBlur}
               className={
-                errors.priority && touched.priority ? "form_error_field" : ""
+                errors.importance && touched.importance
+                  ? "form_error_field"
+                  : ""
               }
             >
               <option value="">Seleccionar una prioridad</option>
-              <option value="low">Baja</option>
-              <option value="medium">Media</option>
-              <option value="high">Alta</option>
+              <option value="LOW">Baja</option>
+              <option value="MEDIUM">Media</option>
+              <option value="HIGH">Alta</option>
             </select>
-            {errors.priority && touched.priority && (
-              <span className="form_error_msg">{errors.priority}</span>
+            {errors.importance && touched.importance && (
+              <span className="form_error_msg">{errors.importance}</span>
             )}
           </div>
         </section>
@@ -101,6 +135,7 @@ export const TaskForm = () => {
         </section>
         <button type="submit">Crear tarea</button>
       </form>
+      <ToastContainer />
     </section>
   );
 };

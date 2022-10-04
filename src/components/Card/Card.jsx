@@ -1,21 +1,22 @@
-//utils
-const limitString = (str) => {
-  const maxChar = 128;
-  if (str.length > maxChar) {
-    return str.slice(0, maxChar - 3).concat("...");
-  }
-  return str;
-};
-export const Card = ({ data }) => {
+import { limitString } from "../../utils/limitString";
+import "./Card.styles.css";
+export const Card = ({
+  title,
+  date,
+  creator,
+  status,
+  importance,
+  description,
+}) => {
   return (
     <div className="card">
       <div className="close">x</div>
-      <h3>{data.title}</h3>
-      <h6>{data.date}</h6>
-      <h5>{data.creator}</h5>
-      <button type="button">{data.status}</button>
-      <button type="button">{data.priority}</button>
-      <p>{limitString(data.description)}</p>
+      <h3>{title}</h3>
+      <h6>{date}</h6>
+      <h5>{creator}</h5>
+      <button type="button">{status}</button>
+      <button type="button">{importance}</button>
+      <p>{limitString(description)}</p>
     </div>
   );
 };

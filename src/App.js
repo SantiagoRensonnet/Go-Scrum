@@ -5,13 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { Login } from "./components/views/auth/Login/Login";
 import { Register } from "./components/views/auth/Register/Register";
+import { Registered } from "./components/views/Registered/Registered";
 import { Error404 } from "./components/views/Error404/Error404";
 import { Tasks } from "./components/views/Tasks/Tasks";
 //styles
 import "./App.css";
 
 const RequireAuth = ({ children }) =>
-  localStorage.getItem("logged") ? (
+  localStorage.getItem("token") ? (
     children
   ) : (
     <Navigate to="/login" replace={true} />
@@ -71,6 +72,20 @@ export const App = () => {
               variants={pageTransition}
             >
               <Register />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/registered/:userId"
+          element={
+            <motion.div
+              className="page"
+              initial="out"
+              animate="in"
+              exit="out"
+              variants={pageTransition}
+            >
+              <Registered />
             </motion.div>
           }
         />

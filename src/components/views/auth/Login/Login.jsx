@@ -3,8 +3,15 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+//Components
+import { swal } from "../../../../utils/swal";
 //Styles
 import "../Auth.styles.css";
+//Schemas
+import { loginFormSchema } from "./loginFormSchema";
+
+//Environment variable
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env;
 
 export const Login = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -12,33 +19,35 @@ export const Login = () => {
 
   //Event Handlers
   //Formik form Handler (change and submit)
-  const { handleSubmit, handleChange, values, errors } = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validate: (values) => {
-      const errors = {};
-      if (!values.email) {
-        errors.email = "Required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
-      //...
-      if (!values.password) {
-        errors.password = "Required";
-      }
-
-      return errors;
-    },
-    onSubmit: (values) => {
-      localStorage.setItem("logged", "yes");
-      setIsVisible(false);
-      navigate("/", { replace: true });
-    },
-  });
+  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
+    useFormik({
+      initialValues: {
+        userName: "",
+        password: "",
+      },
+      validationSchema: loginFormSchema,
+      onSubmit: (values) => {
+        const { userName, password } = values;
+        // localStorage.setItem("token", "yes");
+        fetch(`${API_ENDPOINT}auth/login`, {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userName, password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status_code === 200) {
+              localStorage.setItem("token", data?.result?.token);
+              setIsVisible(false);
+              navigate("/", { replace: true });
+            } else {
+              swal();
+            }
+          });
+      },
+    });
 
   return (
     isVisible && (
@@ -53,26 +62,39 @@ export const Login = () => {
             <h1>Iniciar Sesión</h1>
             <form onSubmit={handleSubmit}>
               <div className="form_input_group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Nombre de Usuario</label>
                 <input
-                  type="email"
-                  name="email"
+                  type="text"
+                  name="userName"
                   onChange={handleChange}
-                  value={values.email}
+                  onBlur={handleBlur}
+                  value={values.userName}
+                  className={
+                    errors.userName && touched.userName
+                      ? "form_error_field"
+                      : ""
+                  }
                 />
-                {errors.email && (
-                  <span className="form_error_msg">{errors.email}</span>
+                {errors.userName && touched.userName && (
+                  <span className="form_error_msg">{errors.userName}</span>
                 )}
               </div>
+
               <div className="form_input_group">
                 <label htmlFor="password">Contraseña</label>
                 <input
                   type="password"
                   name="password"
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   value={values.password}
+                  className={
+                    errors.password && touched.password
+                      ? "form_error_field"
+                      : ""
+                  }
                 />
-                {errors.password && (
+                {errors.password && touched.password && (
                   <span className="form_error_msg">{errors.password}</span>
                 )}
               </div>

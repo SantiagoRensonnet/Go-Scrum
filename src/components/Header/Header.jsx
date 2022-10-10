@@ -9,8 +9,8 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userName");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userName");
     setIsVisible(false);
     navigate("/", { replace: true });
   };
@@ -26,7 +26,7 @@ export const Header = () => {
           <span>Go Scrum</span>
           <div className="wrapper_right_header">
             <div className="username_header">
-              {localStorage.getItem("userName")}
+              {sessionStorage.getItem("userName")}
             </div>
             <div className="close_btn_header" onClick={handleLogout}>
               x

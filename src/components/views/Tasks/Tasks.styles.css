@@ -13,6 +13,7 @@
 #tasks .wrapper_list > h2 {
   font-size: 1.2rem;
 }
+
 #tasks .wrapper_list .list_group {
   display: flex;
   flex-direction: row;
@@ -25,48 +26,14 @@
   box-shadow: 0 2px 5px #dbdbdb;
   background-color: white;
 }
-#tasks .card {
-  background-color: #fff;
+#tasks .wrapper_list > select,
+#tasks .wrapper_list > input {
+  width: 100%;
   border: var(--global-border);
-  border-radius: 12px;
-  margin-bottom: 0.8rem;
-  padding: 0.8rem 1.1re, 0.9rem;
-  margin: 1rem 0;
-  position: relative;
-  /* transition: transform 0.2s ease-out; */
-}
-#tasks .card > .close {
-  position: absolute;
-  right: 1rem;
-  top: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-#tasks .card h5,
-h6 {
-  font-weight: 400;
-}
-#tasks .card h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-}
-#tasks .card p {
-  font-size: 0.8rem;
-  font-weight: 100;
-  color: rgb(105, 72, 72);
-}
-#tasks .card button {
-  margin: 0.3rem 0.5rem 0.3rem 0;
-  padding: 0.2em 0.5em;
-  font-weight: 700;
-  background-color: var(--global-primary-color);
   border-radius: var(--global-radius);
-  border: var(--global-border);
-  border-color: transparent;
-  color: white;
-  font-size: 0.7rem;
+}
+#tasks .wrapper_list > input {
+  padding: 0 0.5rem;
 }
 
 @media screen and (min-width: 900px) {
@@ -77,9 +44,6 @@ h6 {
   }
   #tasks > .wrapper_list {
     grid-column: 2/4;
-  }
-  .card {
-    width: 95%;
   }
 }
 @media screen and (min-width: 1300px) {

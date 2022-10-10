@@ -12,7 +12,7 @@ import { Tasks } from "./components/views/Tasks/Tasks";
 import "./App.css";
 
 const RequireAuth = ({ children }) =>
-  localStorage.getItem("token") ? (
+  sessionStorage.getItem("token") ? (
     children
   ) : (
     <Navigate to="/login" replace={true} />
